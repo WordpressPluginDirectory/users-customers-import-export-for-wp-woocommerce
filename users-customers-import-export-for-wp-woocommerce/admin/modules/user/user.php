@@ -528,7 +528,7 @@ class Wt_Import_Export_For_Woo_basic_User {
 		);
 		if ( class_exists( 'woocommerce' ) ){
         $out['export_guest_user'] = array(
-            'label' => __("Export guest users"),
+            'label' => __("Export guest customers"),
             'type' => 'checkbox',
 			'merge_right' => true,
 			'checkbox_fields' => array( 1 => __( 'Enable' ) ),
