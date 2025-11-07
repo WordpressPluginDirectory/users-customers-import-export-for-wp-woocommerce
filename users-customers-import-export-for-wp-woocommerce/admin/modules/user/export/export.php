@@ -70,7 +70,8 @@ class Wt_Import_Export_For_Woo_basic_User_Export {
                     'number' => $limit,
                     'offset' => $real_offset,
                     'orderby' => 'meta_value',
-                    'meta_key' => $wt_export_sortby,
+                    // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+                    'meta_key' => $wt_export_sortby, // @codingStandardsIgnoreLine
                     'order' => $export_sort_order,
                     'date_query' => array(
                         array(
@@ -141,7 +142,8 @@ class Wt_Import_Export_For_Woo_basic_User_Export {
                     'post_status' => 'any',
                     'posts_per_page' => -1,
                 );
-                $query_args['meta_query'] = array(array(
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+                $query_args['meta_query'] = array(array( // @codingStandardsIgnoreLine
                         'key' => '_customer_user',
                         'value' => 0,
                         'compare' => '',
@@ -177,7 +179,7 @@ class Wt_Import_Export_For_Woo_basic_User_Export {
             $return['total'] = $total_records;
             $return['data'] = $data_array;
             if( 0 == $batch_offset && 0 == $total_records ){
-				$return['no_post'] = __( 'Nothing to export under the selected criteria.' );
+				$return['no_post'] = __( 'Nothing to export under the selected criteria.', 'users-customers-import-export-for-wp-woocommerce' );
 		    }
             return $return;
         }
@@ -244,7 +246,7 @@ class Wt_Import_Export_For_Woo_basic_User_Export {
                     $customer_data[$key] = '';
                 }
                 elseif(strtotime($date_in_timestamp) == false){
-                    $customer_data[$key] = date('Y-m-d H:i:s', $date_in_timestamp);
+                    $customer_data[$key] = gmdate('Y-m-d H:i:s', $date_in_timestamp);
                 }else{
                     $customer_data[$key] = $date_in_timestamp ? gmdate( 'Y-m-d', $date_in_timestamp ) : $date_in_timestamp;
                 }
@@ -256,14 +258,14 @@ class Wt_Import_Export_For_Woo_basic_User_Export {
                     $customer_data[$key] = '';
                 }
                 elseif(strtotime($date_in_timestamp) ==false){
-                    $customer_data[$key] = date('Y-m-d', $date_in_timestamp);
+                    $customer_data[$key] = gmdate('Y-m-d', $date_in_timestamp);
                 }else{
                     $customer_data[$key] = $date_in_timestamp ? gmdate( 'Y-m-d', $date_in_timestamp ) : $date_in_timestamp;
                 }
                 continue;
             }
 
-            if($key == 'is_geuest_user'){
+            if($key == 'is_guest_user'){
                 $customer_data[$key] = 0;
                 continue;
             }
@@ -287,7 +289,7 @@ class Wt_Import_Export_For_Woo_basic_User_Export {
     public function get_guest_customers_csv_row($order) {
         $customer_data = array();
         $csv_columns = $this->parent_module->get_selected_column_names();
-        $key_array = array('user_email', 'billing_first_name', 'billing_last_name', 'billing_company', 'billing_email', 'billing_phone', 'billing_address_1', 'billing_address_2', 'billing_postcode', 'billing_city', 'billing_state', 'billing_country', 'shipping_first_name', 'shipping_last_name', 'shipping_company', 'shipping_phone', 'shipping_address_1', 'shipping_address_2', 'shipping_postcode', 'shipping_city', 'shipping_state', 'shipping_country', 'shipping_method', 'is_geuest_user', 'roles');
+        $key_array = array('user_email', 'billing_first_name', 'billing_last_name', 'billing_company', 'billing_email', 'billing_phone', 'billing_address_1', 'billing_address_2', 'billing_postcode', 'billing_city', 'billing_state', 'billing_country', 'shipping_first_name', 'shipping_last_name', 'shipping_company', 'shipping_phone', 'shipping_address_1', 'shipping_address_2', 'shipping_postcode', 'shipping_city', 'shipping_state', 'shipping_country', 'shipping_method', 'is_guest_user', 'roles');
         foreach ( $csv_columns as $key ) {
 			$data = '';
             if ( in_array( $key, $key_array ) ) {
@@ -295,8 +297,8 @@ class Wt_Import_Export_For_Woo_basic_User_Export {
                     $customer_data[$key] = $order->get_billing_email();
                     continue;
                 }
-                if ( 'is_geuest_user' === $key ) {
-                    $customer_data['is_geuest_user'] = 1;
+                if ( 'is_guest_user' === $key ) {
+                    $customer_data['is_guest_user'] = 1;
                     continue;
                 }
                 if ( 'roles' === $key ) {
