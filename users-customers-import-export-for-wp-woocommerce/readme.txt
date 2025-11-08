@@ -4,7 +4,7 @@ Tags: import customers, export customers, import users from csv, export users to
 Requires at least: 3.0.1
 Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 2.6.7
+Stable tag: 2.6.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -218,8 +218,9 @@ Please refer the article on how to <a href="https://www.webtoffee.com/refresh-wo
 
 
 == Changelog ==
+= 2.6.8 2025-11-07 =
+* [Improvement] Security Improvements.
 
-== Changelog ==
 = 2.6.7 2025-11-06 =
 * [Compatibility] – Tested OK with WooCommerce 10.3.4
 
@@ -562,5 +563,5 @@ Please refer the article on how to <a href="https://www.webtoffee.com/refresh-wo
 
 == Upgrade Notice ==
 
-= 2.6.7 =
-* [Compatibility] – Tested OK with WooCommerce 10.3.4
+= 2.6.8 =
+* [Improvement] Security Improvements.

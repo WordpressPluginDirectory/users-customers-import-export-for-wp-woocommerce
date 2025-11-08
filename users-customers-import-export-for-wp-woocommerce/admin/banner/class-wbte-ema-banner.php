@@ -87,6 +87,13 @@ if ( ! class_exists( 'Wbte_Ema_Banner' ) ) {
          * @return boolean
          */
         private function ema_should_display_banner() {
+            $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+            // Only consider showing on Analytics Overview page
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check of current page
+            if ( ! $screen || 'woocommerce_page_wc-admin' !== $screen->id || ! isset( $_GET['path'] ) || '/analytics/overview' !== $_GET['path'] ) {
+                return false;
+            }
+
             return ! get_option( $this->analytics_page_dismiss_option ) && ! defined( 'WBTE_EMA_ANALYTICS_BANNER' );
         }
 
